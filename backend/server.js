@@ -14,14 +14,20 @@ const app = express();
 // Middleware
 const allowedOrigins = [
     'http://localhost:5173',
-    process.env.FRONTEND_URL, // Production frontend URL
-].filter(Boolean);
+    'http://localhost:5000',
+    process.env.FRONTEND_URL,
+].filter(Boolean).map(origin => origin.replace(/\/$/, '')); // Strip trailing slashes
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        const normalizedOrigin = origin.replace(/\/$/, '');
+        if (allowedOrigins.includes(normalizedOrigin)) {
             callback(null, true);
         } else {
+            console.error(`CORS Blocked Origin: ${origin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -30,12 +36,24 @@ app.use(cors({
 
 app.use(express.json());
 
+// Request logger
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url} - ${new Date().toISOString()}`);
+    next();
+});
+
 // Routes
 app.use('/api/appointments', appointmentRoutes);
 
 // Health Check
 app.get('/', (req, res) => {
-    res.send('Sanjeevani Homeo Clinic API is running...');
+    res.status(200).json({ message: 'Sanjeevani Homeo Clinic API is running...' });
+});
+
+// Error Handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
 });
 
 const PORT = process.env.PORT || 5000;

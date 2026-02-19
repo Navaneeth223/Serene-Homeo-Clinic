@@ -30,6 +30,7 @@ export const createAppointment = async (req, res) => {
             message: 'Appointment booked successfully!'
         });
     } catch (error) {
+        console.error('Error creating appointment:', error);
         res.status(500).json({
             success: false,
             error: error.message || 'Server Error'

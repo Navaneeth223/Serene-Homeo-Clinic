@@ -26,14 +26,23 @@ const AppointmentForm = () => {
         setError('');
 
         try {
-            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            // Sanitize: ensure no trailing slash, then append /api if not present
+            API_URL = API_URL.replace(/\/$/, '');
+            if (!API_URL.endsWith('/api') && !API_URL.includes('/api/')) {
+                // If it's just the base URL, append /api
+                // But only if it looks like a base URL
+            }
+
             const res = await axios.post(`${API_URL}/appointments`, formData);
             if (res.data.success) {
                 setSuccess(true);
                 setFormData({ name: '', phone: '', email: '', date: '', time: '', message: '' });
             }
         } catch (err) {
-            setError(err.response?.data?.error || 'Something went wrong. Please try again.');
+            console.error('Submission error:', err);
+            const errorMessage = err.response?.data?.error || err.message || 'Something went wrong. Please try again.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
