@@ -377,16 +377,6 @@ const AdminDashboard = () => {
                                                     <div className="h-6 w-[1px] bg-primary/10 mx-1"></div>
 
                                                     <a 
-                                                        href={`https://wa.me/${app.phone.replace(/[^0-9]/g, '')}`} 
-                                                        target="_blank" 
-                                                        rel="noreferrer"
-                                                        className="p-2 bg-[#25D366]/10 text-[#25D366] rounded-lg hover:bg-[#25D366] hover:text-white transition-all shadow-sm"
-                                                        title="WhatsApp Patient"
-                                                    >
-                                                        <MessageCircle size={18} />
-                                                    </a>
-
-                                                    <a 
                                                         href={`tel:${app.phone}`}
                                                         className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm"
                                                         title="Call Patient"

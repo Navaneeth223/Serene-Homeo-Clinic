@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -32,6 +32,7 @@ const HomePage = () => (
 );
 
 function App() {
+    const location = useLocation();
     return (
         <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
             <Routes>
@@ -47,15 +48,17 @@ function App() {
                 />
             </Routes>
 
-            {/* WhatsApp Floating Button - Only show on Home page if desired, but here we keep it global for simplicity or can wrap in a conditional if needed */}
-            <a
-                href="https://wa.me/910000000000"
-                target="_blank"
-                rel="noreferrer"
-                className="fixed bottom-8 right-8 w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl z-50 hover:scale-110 active:scale-95 transition-transform"
-            >
-                <MessageCircle size={32} />
-            </a>
+            {/* WhatsApp Floating Button - Only show on non-admin pages */}
+            {!location.pathname.startsWith('/admin') && (
+                <a
+                    href="https://wa.me/910000000000"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="fixed bottom-8 right-8 w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl z-50 hover:scale-110 active:scale-95 transition-transform"
+                >
+                    <MessageCircle size={32} />
+                </a>
+            )}
         </div>
     );
 }
