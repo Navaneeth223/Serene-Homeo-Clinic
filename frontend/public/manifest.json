@@ -1,0 +1,28 @@
+{
+  "short_name": "Sanjeevani Admin",
+  "name": "Sanjeevani Homeo Clinic Admin Dashboard",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/vite.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+       "src": "/vite.svg",
+       "type": "image/svg+xml",
+       "sizes": "512x512",
+       "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/admin",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#0D9488",
+  "description": "Clinic Management App"
+}

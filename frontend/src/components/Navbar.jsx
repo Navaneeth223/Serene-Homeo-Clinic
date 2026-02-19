@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,11 +16,12 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Home', href: '#' },
+        { name: 'Home', href: '/' },
         { name: 'About', href: '#about' },
         { name: 'Treatments', href: '#treatments' },
         { name: 'Testimonials', href: '#testimonials' },
         { name: 'Contact', href: '#contact' },
+        { name: 'Admin', href: '/admin', isRoute: true },
     ];
 
     return (
@@ -30,22 +32,34 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     className="text-2xl font-serif font-bold text-primary flex items-center gap-2"
                 >
-                    <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white text-xl">
-                        S
-                    </div>
-                    <span className="hidden sm:block">Sanjeevani <span className="text-accent underline decoration-accent/30">Homeo</span></span>
+                    <RouterLink to="/" className="flex items-center gap-2">
+                        <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white text-xl">
+                            S
+                        </div>
+                        <span className="hidden sm:block text-dark">Sanjeevani <span className="text-accent underline decoration-accent/30">Homeo</span></span>
+                    </RouterLink>
                 </motion.div>
 
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            className="text-dark hover:text-primary font-medium transition-colors"
-                        >
-                            {link.name}
-                        </a>
+                        link.isRoute ? (
+                            <RouterLink
+                                key={link.name}
+                                to={link.href}
+                                className="text-dark hover:text-primary font-medium transition-colors"
+                            >
+                                {link.name}
+                            </RouterLink>
+                        ) : (
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    className="text-dark hover:text-primary font-medium transition-colors"
+                                >
+                                    {link.name}
+                                </a>
+                            )
                     ))}
                     <a href="#appointment" className="btn-primary flex items-center gap-2">
                         <Phone size={18} />
@@ -73,14 +87,25 @@ const Navbar = () => {
                     >
                         <div className="flex flex-col p-6 gap-4">
                             {navLinks.map((link) => (
-                                <a
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className="text-dark text-lg font-medium hover:text-primary"
-                                >
-                                    {link.name}
-                                </a>
+                                link.isRoute ? (
+                                    <RouterLink
+                                        key={link.name}
+                                        to={link.href}
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-dark text-lg font-medium hover:text-primary"
+                                    >
+                                        {link.name}
+                                    </RouterLink>
+                                ) : (
+                                        <a
+                                            key={link.name}
+                                            href={link.href}
+                                            onClick={() => setIsOpen(false)}
+                                            className="text-dark text-lg font-medium hover:text-primary"
+                                        >
+                                            {link.name}
+                                        </a>
+                                    )
                             ))}
                             <a
                                 href="#appointment"

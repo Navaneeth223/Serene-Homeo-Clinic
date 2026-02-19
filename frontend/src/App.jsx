@@ -9,7 +9,14 @@ import Testimonials from './components/Testimonials';
 import Location from './components/Location';
 import Footer from './components/Footer';
 import AdminDashboard from './components/AdminDashboard';
+import AdminLogin from './components/AdminLogin';
 import { MessageCircle } from 'lucide-react';
+import { Navigate } from 'react-router-dom';
+
+const ProtectedRoute = ({ children }) => {
+    const isAuthenticated = localStorage.getItem('adminToken') === 'dummy-admin-token';
+    return isAuthenticated ? children : <Navigate to="/admin/login" />;
+};
 
 const HomePage = () => (
     <>
@@ -29,7 +36,15 @@ function App() {
         <div className="min-h-screen bg-secondary selection:bg-primary selection:text-white">
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedRoute>
+                            <AdminDashboard />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
 
             {/* WhatsApp Floating Button - Only show on Home page if desired, but here we keep it global for simplicity or can wrap in a conditional if needed */}

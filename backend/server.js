@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
 import appointmentRoutes from './routes/appointmentRoutes.js';
+import webpush from 'web-push';
+import authRoutes from './routes/authRoutes.js';
+import pushRoutes from './routes/pushRoutes.js';
 
 dotenv.config();
 
@@ -11,9 +14,19 @@ connectDB();
 
 const app = express();
 
+// Configure Web Push
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+    webpush.setVapidDetails(
+        'mailto:admin@serenehomeo.com',
+        process.env.VAPID_PUBLIC_KEY,
+        process.env.VAPID_PRIVATE_KEY
+    );
+}
+
 // Middleware
 const allowedOrigins = [
     'http://localhost:5173',
+    'http://localhost:5174',
     'http://localhost:5000',
     'https://serene-homeo-clinic.vercel.app', // Explicitly add the user's Vercel URL
     process.env.FRONTEND_URL,
@@ -47,6 +60,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/push', pushRoutes);
 app.use('/api/appointments', appointmentRoutes);
 
 // Health Check
