@@ -27,11 +27,12 @@ const AppointmentForm = () => {
 
         try {
             let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-            // Sanitize: ensure no trailing slash, then append /api if not present
+            // Sanitize: ensure no trailing slash
             API_URL = API_URL.replace(/\/$/, '');
-            if (!API_URL.endsWith('/api') && !API_URL.includes('/api/')) {
-                // If it's just the base URL, append /api
-                // But only if it looks like a base URL
+
+            // If the URL doesn't end with /api, append it to match the backend expectation
+            if (!API_URL.endsWith('/api')) {
+                API_URL = `${API_URL}/api`;
             }
 
             const res = await axios.post(`${API_URL}/appointments`, formData);
