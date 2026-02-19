@@ -26,18 +26,19 @@ const AppointmentForm = () => {
         setError('');
 
         try {
-            let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-            // Sanitize: ensure no trailing slash
-            API_URL = API_URL.replace(/\/$/, '');
+            let apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').trim();
+            // Remove trailing slash
+            apiBase = apiBase.replace(/\/$/, '');
 
-            // If the URL doesn't end with /api, append it to match the backend expectation
-            if (!API_URL.endsWith('/api')) {
-                API_URL = `${API_URL}/api`;
+            // If the user provided the base URL without /api, add it
+            if (!apiBase.toLowerCase().endsWith('/api')) {
+                apiBase += '/api';
             }
 
-            console.log('Attempting to book appointment at:', `${API_URL}/appointments`);
+            const finalURL = `${apiBase}/appointments`;
+            console.log('Attempting to book at:', finalURL);
 
-            const res = await axios.post(`${API_URL}/appointments`, formData);
+            const res = await axios.post(finalURL, formData);
             if (res.data.success) {
                 setSuccess(true);
                 setFormData({ name: '', phone: '', email: '', date: '', time: '', message: '' });

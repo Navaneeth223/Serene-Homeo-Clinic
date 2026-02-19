@@ -26,13 +26,17 @@ const AdminDashboard = () => {
         setLoading(true);
         setError('');
         try {
-            let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-            API_URL = API_URL.replace(/\/$/, '');
-            if (!API_URL.endsWith('/api')) API_URL = `${API_URL}/api`;
+            let apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').trim();
+            apiBase = apiBase.replace(/\/$/, '');
 
-            console.log('Fetching appointments from:', `${API_URL}/appointments`);
+            if (!apiBase.toLowerCase().endsWith('/api')) {
+                apiBase += '/api';
+            }
 
-            const res = await axios.get(`${API_URL}/appointments`);
+            const finalURL = `${apiBase}/appointments`;
+            console.log('Fetching from:', finalURL);
+
+            const res = await axios.get(finalURL);
             if (res.data.success) {
                 setAppointments(res.data.data);
             }
