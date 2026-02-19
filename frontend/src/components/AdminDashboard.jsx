@@ -30,6 +30,8 @@ const AdminDashboard = () => {
             API_URL = API_URL.replace(/\/$/, '');
             if (!API_URL.endsWith('/api')) API_URL = `${API_URL}/api`;
 
+            console.log('Fetching appointments from:', `${API_URL}/appointments`);
+
             const res = await axios.get(`${API_URL}/appointments`);
             if (res.data.success) {
                 setAppointments(res.data.data);

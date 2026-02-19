@@ -35,6 +35,8 @@ const AppointmentForm = () => {
                 API_URL = `${API_URL}/api`;
             }
 
+            console.log('Attempting to book appointment at:', `${API_URL}/appointments`);
+
             const res = await axios.post(`${API_URL}/appointments`, formData);
             if (res.data.success) {
                 setSuccess(true);
