@@ -1,0 +1,16 @@
+Commercial Usage Notice
+
+This project (Serene Homeo Clinic) is developed and maintained by Navaneeth KV.
+
+You are allowed to:
+- View the source code
+- Learn from the project
+- Use for personal and educational purposes
+
+You are NOT allowed to:
+- Resell this project as a template
+- Use it for commercial clinic deployments without permission
+- Rebrand and sell the system to clients without authorization
+
+For commercial licensing or clinic deployment, please contact:
+Email: navaneethkv1002@gmail.com
