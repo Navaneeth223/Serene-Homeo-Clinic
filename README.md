@@ -1,4 +1,4 @@
-# 🏥 Serene Homeo Clinic – Full Stack Clinic Management System
+# 🏥 Serene Homeo Clinic – Full Stack Clinic Management System not selled yati
 
 ![Frontend](https://img.shields.io/badge/Frontend-React-blue)
 ![Backend](https://img.shields.io/badge/Backend-Node%20%2B%20Express-green)
